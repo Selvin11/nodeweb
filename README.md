@@ -18,7 +18,7 @@ node.js + express 4.x + jade
 		Express 4.x 已经不支持`flash()`方法，需要引入模块`require('connect-flash')`，此模块就是提供原有的`flash()`方法，但在用之前需要`app.use(flash())`，这样相当于激活该方法，下面来讲讲`flash()`是什么，通过NPM和其对应的英文文档描述，主要起到处于客户端和服务端的桥梁作用，能够缓存服务器通过模板引擎传递给客户端的数据，并且是一次性的，属于用即弃的性质，因此简化的会话操作。
 		
 	* 问题2 => mongodb相关模块的使用
-
+	
 		```javascript
 		var session = require('express-session');
         var settings = require('./settings');
@@ -26,8 +26,8 @@ node.js + express 4.x + jade
         ```
 
 	    * 这些都是相关的模块引入，主要是session的设置，这里引出关于session和cookie的关联问题，（cookie和session都是为了记录用户与浏览器之间以及浏览器和服务器之间的会话记录的，cookie存在于浏览器客户端中，session则存在服务器中，相比的话session的安全级别更高）。
-
-		引入模块之后，需要设置session，书中提供的方法已经不适用了，解决如下：
+	    
+         * 引入模块之后，需要设置session，书中提供的方法已经不适用了，解决如下：
 		注释掉db,host,port等一个个的设置，直接写上真正的url地址即可
 		
     		```javascript

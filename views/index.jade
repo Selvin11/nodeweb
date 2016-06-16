@@ -1,0 +1,24 @@
+extends layout
+
+
+block content
+  if (!user)
+    .jumbotron
+      h1 nodeweb info
+      p nodeweb is a web system based on node.js .
+      p
+        a.btn.btn-primary.btn-large(href='/login') 登录
+        a.btn.btn-large(href='/reg') 立即注册
+    .row
+      .col-md-3
+        h2 Jade
+        p A template for html.
+      .col-md-4
+        h2 Bootstrap &amp;&amp; Jquery
+        p Optimize front-end structures
+      .col-md-5
+        h2 node.js
+        p Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient. Node.js' package ecosystem, npm, is the largest ecosystem of open source libraries in the world.
+  else 
+    include say
+  include posts

@@ -1,0 +1,8 @@
+.row
+	each item in posts
+		.col-md-4	  
+			h2
+				a(href='/u/'+item.user)= item.user
+					!= '<samll>'+' 说'+'</samll>'        
+			p!= '<samll>'+item.time+'</samll>'
+			p= item.post

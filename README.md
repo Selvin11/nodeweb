@@ -29,6 +29,7 @@ node.js + express 4.x + jade
 
 		引入模块之后，需要设置session，书中提供的方法已经不适用了，解决如下：
 		注释掉db,host,port等一个个的设置，直接写上真正的url地址即可
+		
     		```javascript
     			app.use(session({
     			resave:false,//添加这行  

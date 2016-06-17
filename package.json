@@ -19,6 +19,7 @@
     "connect-flash": "^0.1.1",
     "connect-mongo": "^1.2.0",
     "express-session": "^1.13.0",
+    "file-stream-rotator": "0.0.6",
     "jade": "^1.11.0",
     "jquery": "^3.0.0",
     "mongodb": "^2.1.18",

@@ -1,5 +1,9 @@
 var express = require('express');
 var path = require('path');
+// 日志模块
+var fs = require('fs');
+var FileStreamRotator = require('file-stream-rotator');
+var logDirectory = __dirname + '/log';
 // 数据库及session相关模块引入
 var session = require('express-session');
 var settings = require('./settings');
@@ -31,11 +35,26 @@ app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+
+// 日志模块设置，以目录形式呈现
+// ensure log directory exists 
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory)
+// create a rotating write stream 
+var accessLogStream = FileStreamRotator.getStream({
+  date_format: 'YYYYMMDD',
+  filename: logDirectory + '/access-%DATE%.log',
+  frequency: 'daily',
+  verbose: false
+});
+app.use(logger('combined',{stream: accessLogStream}));
+
+
 
 
 // mongodb connect
@@ -73,6 +92,17 @@ app.use(function(req,res,next){
 
 // 路由输出
 app.use('/',routes);
+
+
+// 允许跨进程端口复用,判断当前模块是否被其它模块调用，不是则启动，是就不启动
+if (!module.parent) {
+  app.listen(3000);
+  console.log("Express server listening on port %d in %s mode", app.address().port,
+           app.settings.env);
+}
+
+
+
 
 
 

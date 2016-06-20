@@ -111,15 +111,32 @@ router.post("/post",function(req,res) {
 	var currentUser = req.session.user;
 	console.log(req.session.user.name)
 	var post = new Post(currentUser.name, req.body.post);
-	post.save(function(err) {
-		if (err) {
-			req.flash('error', err);
-			return res.redirect('/');
-		}
-		req.flash('success', '发表成功');
-		res.redirect('/u/' + currentUser.name);
-	});
+  if (req.body.post !== '') {
+    post.save(function(err) {
+    if (err) {
+      req.flash('error', err);
+      return res.redirect('/');
+    }
+    req.flash('success', '发表成功');
+    res.redirect('/u/' + currentUser.name);
+  });
+  }
+	
 });
+
+// router.delete("/post",function (req,res) {
+//   Post.remove(user._id,function (err,posts) {
+//     if (err) {
+//       req.flash('error',err);
+//       return res.redirect("/");
+//     }
+//     res.render('user',{
+//       title: user.name,
+//       // Post回调函数从数据库传来的posts数据
+//       posts: posts
+//     })
+//   })
+// })
 
 router.get("/u/:user",function(req,res) {
 	User.get(req.params.user, function(err, user) {
@@ -140,6 +157,8 @@ router.get("/u/:user",function(req,res) {
 		});
 	});
 });
+
+
 
 // 页面权限控制，登出功能只对已经完成登录的人显示，登录功能只对还未登录的人显示
 // 通过路由中间件，调用next（）函数实现view页面的控制转移

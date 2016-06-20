@@ -1,8 +1,18 @@
 .row
-	each item in posts
-		.col-md-4	  
-			h2
-				a(href='/u/'+item.user)= item.user
-					!= '<samll>'+' 说'+'</samll>'        
-			p!= '<samll>'+item.time+'</samll>'
-			p= item.post
+  each item in posts
+    if(user)
+      .col-md-4.alert.alert-dismissible(data-dismiss='alert',role='alert')
+        button.close(type='button',data-dismiss='alert',aria-label='close',data-id="#{item.user}")
+            span(aira-hidden='true') &times;
+        h2
+          a(href='/u/'+item.user)= item.user
+            != '<samll>'+' 说'+'</samll>'
+        p!= '<samll>'+item.time+'</samll>'
+        p= item.post
+    else
+      .col-md-4
+        h2
+          a(href='/u/'+item.user)= item.user
+            != '<samll>'+' 说'+'</samll>'
+        p!= '<samll>'+item.time+'</samll>'
+        p= item.post

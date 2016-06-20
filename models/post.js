@@ -3,10 +3,11 @@ var mongodb = require('../schemas/db.js');
 function Post(username,post,time) {
 	this.user = username;
 	this.post = post;
+	var date = new Date();
 	if (time) {
 		this.time = time;
 	}else{
-		this.time = new Date();
+		this.time = date.toLocaleString();
 	}
 };
 
@@ -76,5 +77,44 @@ Post.get = function get(username,callback) {
 	})
 };
 
+
+
+Post.remove = function remove(id,callback) {
+	// 打开数据库
+	mongodb.open(function (err,db) {
+		if (err) {
+			return callback(err);
+		}
+		// 读取数据库中所有的post
+		db.collection('posts',function (err,collection) {
+			if (err) {
+				mongodb.close();
+				return callback(err);
+			}
+			// 查找 username 对应的post数据文档
+			var query = {};
+			if (id) {
+				query._id = id;
+			}
+			collection.remove(query);
+			mongodb.close();
+			callback(null,posts);
+			// collection.find(query).sort({time: -1}).toArray(function (err,docs) {
+			// 	mongodb.close();
+			// 	if (err) {
+			// 		callback(err,null);
+			// 	}
+			// 	// 将post 封装为Post对象
+			// 	var posts = [];
+			// 	docs.forEach(function (doc,index) {
+			// 		var post = new Post(doc.user,doc.post,doc.time);
+			// 		posts.push(post);
+			// 	})
+			// 	// 将封装后的所有posts数据通过get方法的回调函数传递给前台
+			// 	callback(null,posts);
+			// })
+		})
+	})
+};
 
 module.exports = Post;

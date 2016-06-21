@@ -124,19 +124,6 @@ router.post("/post",function(req,res) {
 	
 });
 
-// router.delete("/post",function (req,res) {
-//   Post.remove(user._id,function (err,posts) {
-//     if (err) {
-//       req.flash('error',err);
-//       return res.redirect("/");
-//     }
-//     res.render('user',{
-//       title: user.name,
-//       // Post回调函数从数据库传来的posts数据
-//       posts: posts
-//     })
-//   })
-// })
 
 router.get("/u/:user",function(req,res) {
 	User.get(req.params.user, function(err, user) {
